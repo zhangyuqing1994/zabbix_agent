@@ -1,0 +1,61 @@
+---
+- name: yum install {{ sort }}
+  yum: name={{ item }} enablerepo=epel state=present
+  with_items:
+    - lrzsz
+    - gcc
+    - lsof
+    - net-tools
+    - pcre-devel
+  when: ansible_os_family != "RedHat"
+  tags: install_sort
+
+- name: Remove the user {{ user }}
+  user: name={{ user }} remove=yes
+  tags: remove_user
+
+- name: Add the user {{ user }}
+  user: name={{ user }} shell=/sbin/nologin append=yes
+  tags: add_user
+
+- name: tar xvf {{ zabbix_name }} remote file
+  unarchive: src=templates/{{ zabbix_name }} dest=/tmp
+  tags: tar_zabbix_name
+
+- name: configure zabbix_agent make &&  make install
+  shell: cd /tmp/{{ zabbix_dir }} && ./configure --prefix=/usr/local/zabbix --enable-agent && make && make install
+  tags: config_make_install_zabbix
+
+- name: copy zabbix_agentd /etc/init.d/
+  template: src=templates/zabbix_agentd dest=/etc/init.d/ owner=root group=root mode=0775 backup=yes
+  tags: copy_zabbix_agentd /etc/init.d/
+
+- name: mkdir -p alertscripts directory
+  file: path={{ alertscripts }} state=directory owner=zabbix group=zabbix mode=0755 backup=yes
+  tags: mkdir
+
+- name: copy zabbix_agentd.conf  remote file
+  template: src=templates/zabbix_agentd2.conf dest={{ zabbix_file }}
+  tags: copy_zabbix_agentd2.conf remote
+
+- name: hostname write  zabbix_agentd.conf
+  copy: src=files/zabbix_agentd.sh dest=/tmp/
+  tags: setting_hostname
+
+- name: setting bash /tmp/zabbix_agentd.sh
+  command: bash /tmp/zabbix_agentd.sh
+  tags: bash
+
+- name:  chkconfig zabbix_agentd on 
+  command: chkconfig zabbix_agentd on
+  tags: chkconfig_enabled
+  notify:
+    - restart zabbix
+
+- name: remove {{ zabbix_dir }} directory
+  file: path=/tmp/{zabbix_dir} state=absent
+  tags: remove_zabbis_dir
+
+- name: remove /tmp/zabbix_agentd.sh
+  file: path=/tmp//tmp/zabbix_agentd.sh state=absent
+  tags: remove_zabbix_agentd.sh

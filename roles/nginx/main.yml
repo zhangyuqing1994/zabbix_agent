@@ -1,0 +1,26 @@
+---
+- name: install ntp server
+  yum: name=ntp state=present
+
+- name: install ntp client
+  yum: name=ntpdate
+
+- name: set zone info
+  shell: \cp -rf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+- name: update time
+  shell: ntpdate asia.pool.ntp.org
+
+- name: configure ntp file
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify:
+    - researt ntp
+
+- name: start ntp server
+  service name=ntpd state=started enabled=true
+
+- name: test to see if selinux is running
+  command: getenforce
+  register: sestatus
+  changed_when: false
+

@@ -1,0 +1,34 @@
+---
+- name: install nginx
+  yum: name=nginx state=latest
+
+- name: Remove the user {{ nginx_user }}
+  user:
+    name: '{{ nginx_user }}'
+    remove: yes
+
+- name: Add the nginx_user {{ nginx_user }}
+  user:
+    name: '{{ nginx_user }}'
+
+- name: write config
+  template: src=nginx2.conf dest=/etc/nginx/nginx.conf
+  notify:
+    - restart nginx
+
+- name: mkdir data
+  file:
+    dest: '{{ root }}'
+    mode: 755
+    group: root
+    state: directory
+
+- name: pkill nginx
+  shell: pkill nginx
+
+- name: ensure nginx is running 
+  shell: /usr/sbin/nginx -c /etc/nginx/nginx.conf
+
+- name: pkill nginx
+  command: pkill nginx
+

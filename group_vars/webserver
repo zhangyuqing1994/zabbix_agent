@@ -1,0 +1,17 @@
+---
+sort: 
+  - gcc 
+  - lsof 
+  - net-tools 
+  - pcre-deve
+user: zabbix
+zabbix_name: zabbix-3.4.2.tar.gz
+zabbix_dir: zabbix-3.4.2
+alertscripts: /usr/local/zabbix/alertscripts
+zabbix_file: /usr/local/zabbix/etc/zabbix_agentd.conf
+
+
+worker_processes: 4
+root: /data1
+worker_connections: 1024
+nginx_user: www2

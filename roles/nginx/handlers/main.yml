@@ -1,0 +1,7 @@
+---
+- name: restart ntp
+  service: name=ntpd state=restarted
+
+- name: start nginx
+  service: name=nginx state=started enabled=yes
+
