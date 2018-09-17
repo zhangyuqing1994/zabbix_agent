@@ -4,7 +4,8 @@
 # 安装前改host文件 远程执行机器IP，修改服务端IP 在roles/common/templates/zabbix_agentd2.conf 
 
 # 检测语法
-nsible-playbook -i hosts site.yml --syntax-check
+
+ansible-playbook -i hosts site.yml --syntax-check
 
 # 安装步骤 在当前目录下执行命令
 
