@@ -3,7 +3,7 @@ sort:
   - gcc 
   - lsof 
   - net-tools 
-  - pcre-deve
+  - pcre-devel
 user: zabbix
 zabbix_name: zabbix-3.4.2.tar.gz
 zabbix_dir: zabbix-3.4.2
