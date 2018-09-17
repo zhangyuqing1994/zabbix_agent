@@ -1,5 +1,5 @@
 
-# 确定网络可行性 可以上外网，yum源没问题 系统只能是centos6 centos7 zabbix版本 3.4.2 
+# 确定网络可行性 可以上外网，yum源没问题 支持centos6 centos7系统  zabbix版本 3.4.2 
 
 # 安装前改host文件 远程执行机器IP，修改服务端IP 在roles/common/templates/zabbix_agentd2.conf 
 
