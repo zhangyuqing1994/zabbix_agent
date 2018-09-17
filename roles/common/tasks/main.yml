@@ -7,7 +7,7 @@
     - lsof
     - net-tools
     - pcre-devel
-  when: ansible_os_family != "RedHat"
+  when: ansible_os_family == "RedHat"
   tags: install_sort
 
 - name: Remove the user {{ user }}
