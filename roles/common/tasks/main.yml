@@ -36,15 +36,17 @@
 
 - name: copy zabbix_agentd.conf  remote file
   template: src=templates/zabbix_agentd2.conf dest={{ zabbix_file }}
-  tags: copy_zabbix_agentd2.conf remote
+  notify: 
+    - setting hostname
+  tags: setting hostname
 
-- name: hostname write  zabbix_agentd.conf
-  copy: src=files/zabbix_agentd.sh dest=/tmp/
-  tags: setting_hostname
-
-- name: setting bash /tmp/zabbix_agentd.sh
-  command: bash /tmp/zabbix_agentd.sh
-  tags: bash
+#- name: hostname write  zabbix_agentd.conf
+#  copy: src=files/zabbix_agentd.sh dest=/tmp/
+#  tags: setting_hostname
+#
+#- name: setting bash /tmp/zabbix_agentd.sh
+#  command: bash /tmp/zabbix_agentd.sh
+#  tags: bash
 
 - name:  chkconfig zabbix_agentd on 
   command: chkconfig zabbix_agentd on
