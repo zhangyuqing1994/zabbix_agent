@@ -1,2 +1,2 @@
 [webserver]
-192.168.204.101 ansible_ssh_user=root ansible_ssh_pass=www.yunniao.cn==2016
+192.168.204.102 ansible_ssh_user=root ansible_ssh_pass=www.yunniao.cn==2016
