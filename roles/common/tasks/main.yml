@@ -1,4 +1,8 @@
 ---
+#- name: yum -y install lrzsz gcc lsof net-tools pcre-devel
+#  shell: yum -y install lrzsz gcc lsof net-tools pcre-devel
+#  when: ansible_os_family == "RedHat"
+#
 - name: yum install {{ sort }}
   yum: name={{ item }} enablerepo=epel state=present
   with_items:
