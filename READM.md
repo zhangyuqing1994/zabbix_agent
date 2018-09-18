@@ -11,3 +11,11 @@ ansible-playbook -i hosts site.yml --syntax-check
 
 ansible-playbook -i hosts  site.yml -f 10
 
+
+# 检查zabbix安装是生效 
+
+lsof -i:10050
+
+# 在zabbix server段检查被监控主机是否能被监控到
+
+./zabbix_get -s ip -p 10050 -k system.hostname
