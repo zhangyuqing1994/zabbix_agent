@@ -1,18 +1,18 @@
 ---
-#- name: yum -y install lrzsz gcc lsof net-tools pcre-devel
-#  shell: yum -y install lrzsz gcc lsof net-tools pcre-devel
-#  when: ansible_os_family == "RedHat"
-#
-- name: yum install {{ sort }}
-  yum: name={{ item }} enablerepo=epel state=present
-  with_items:
-    - lrzsz
-    - gcc
-    - lsof
-    - net-tools
-    - pcre-devel
+- name: yum -y install lrzsz gcc lsof net-tools pcre-devel
+  shell: yum -y install lrzsz gcc lsof net-tools pcre-devel
   when: ansible_os_family == "RedHat"
-  tags: install_sort
+#
+#- name: yum install {{ sort }}
+#  yum: name={{ item }} enablerepo=epel state=present
+#  with_items:
+#    - lrzsz
+#    - gcc
+#    - lsof
+#    - net-tools
+#    - pcre-devel
+#  when: ansible_os_family == "RedHat"
+#  tags: install_sort
 
 - name: Remove the user {{ user }}
   user: name={{ user }} remove=yes
@@ -61,5 +61,5 @@
   tags: remove_zabbis_dir
 
 - name: remove /tmp/zabbix_agentd.sh
-  file: path=/tmp//tmp/zabbix_agentd.sh state=absent
+  file: path=/tmp/zabbix_agentd.sh state=absent
   tags: remove_zabbix_agentd.sh
