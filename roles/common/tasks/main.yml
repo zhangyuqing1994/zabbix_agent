@@ -57,7 +57,7 @@
     - restart zabbix
 
 - name: remove {{ zabbix_dir }} directory
-  file: path=/tmp/{zabbix_dir} state=absent
+  file: path=/tmp/{{zabbix_dir}} state=absent
   tags: remove_zabbis_dir
 
 - name: remove /tmp/zabbix_agentd.sh
